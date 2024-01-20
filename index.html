@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>p5.js</title>
+
+    <style>
+        body {
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>おごりルーレット</h1>
+    
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+    <script src="./p5.min.js"></script>
+    <script src="./app.js"></script>
+    <style>
+    .p5Canvas{
+        max-width: 600px;
+        width: 100% !important;
+        height: auto !important;
+    }
+    </style>
+    <div id="canvas"></div>
+    <div class="button_content">
+    <button type="button" id="reset" onclick="reset()">リセット</button>
+    <button type="button" id="start" onclick="start()">スタート</button>
+    <button type="button" id="stop" onclick="stop()" style="display:none;">ストップ</button>
+    </div>
+
+    <h2>結果</h2>
+    <p id="result">????</p>
+
+    <button type="button" class="add">追加</button>
+    <div>
+        <div>
+            <table id="table">
+                <tr class="item"><td><button type="button" class="color-indicator" style="background-color:#000000;" onclick="ngItem(this)"></div></td><td><input type="text" class="name" value="1"></td><td><button type="button" onclick="rmItem(this)">削除</button></td></tr>
+                <tr class="item"><td><button type="button" class="color-indicator" style="background-color:#000000;" onclick="ngItem(this)"></div></td><td><input type="text" class="name" value="2"></td><td><button type="button" onclick="rmItem(this)">削除</button></td></tr>
+            </table>
+        </div>
+    </div>
+
+    <style>
+    .color-indicator{
+        border: none;
+        width: 15px;
+        height: 15px;
+    }
+    #result{
+        font-size: 20px;
+        font-weight: bold;
+    }
+    
+    </style>
+
+    <script>
+        $('.add').click(function(){
+            var add = '<tr class="item"><td><button type="button" class="color-indicator" style="background-color:#000000;" onclick="ngItem(this)"></div></td><td><input type="text" class="name" value="1"></td><td><button type="button" onclick="rmItem(this)">削除</button></td></tr>';
+            $('#table').append(add);
+            if(mode==Mode.waiting){
+                dataFetch();
+            }
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: "smooth"
+            });
+        });
+        function rmItem(e){
+            if($('.name').length>2){
+                $(e).parent().parent().remove();
+            }
+            if(mode==Mode.waiting){
+                dataFetch();
+            }
+        }
+        function ngItem(e){
+            var itemName = $(e).closest('.item').find('.name').val();
+            if (!NGwordList.includes(itemName) && $('.name').length-1 > NGwordList.length) {
+                NGwordList.push(itemName);
+            }
+        }
+    </script>
+</body>
+</html>
