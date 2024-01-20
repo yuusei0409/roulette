@@ -174,7 +174,7 @@ function start(){
 
         $('#stop').css('display', 'inline-block');
         $('#start').css('display', 'none');
-        dataFetch();
+
         mode = Mode.acceleration;
     }
 }
