@@ -146,7 +146,7 @@ function calculateTargetAngle(index) {
     // 各項目の角度範囲をラジアンで計算
     var anglePerItem = 2 * PI / nameList.length; // 各項目の角度（ラジアン
     var addangle = PI / 2;
-    if (index * anglePerItem > 3*PI/2) {
+    if (index * anglePerItem+anglePerItem/2 >= 3*PI/2) {
         addangle = PI/2 - 2*PI;
     }
     var targetAngle = index * anglePerItem + addangle + anglePerItem/2;
