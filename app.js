@@ -17,6 +17,7 @@ var len = 0;
 var resultDisplayed = false;
 var stop_flag = false;
 var NGwordList = [];
+var targetWord = "";
 
 const ACCEL = 0.01;
 const DECEL = 0.001;
@@ -74,7 +75,15 @@ function cssColorSet(){
         colorMode(HSL, 255);
         var c = color(colorList[counter],255-COLOR_ADJ*colorList[counter],128);
         pop();
-        $(this).css('background-color', "rgb("+c._getRed()+","+c._getGreen()+","+c._getBlue()+")");
+        var bgColor = "rgb("+c._getRed()+","+c._getGreen()+","+c._getBlue()+")";
+        $(this).css('background-color', bgColor);
+
+        var parent = $(this).closest('.item');
+        var indicator_ = parent.find('.color-indicator_');
+        if(indicator_.length){
+            indicator_.css('background-color', bgColor);
+        }
+
         counter++;
     });
 }
@@ -147,16 +156,21 @@ function start(){
             return;
         }
         dataFetch();
-        
-        if (NGwordList.length > 0) {
+
+        if (targetWord != "") {
+        }
+        else if (NGwordList.length > 0) {
             var filteredList = nameList.filter(item => !NGwordList.includes(item));
-            var targetIndex = Math.floor(Math.random() * NGwordList.length);
-            //console.log(NGwordList[targetIndex]);
+            var randomIndex = Math.floor(Math.random() * filteredList.length);
+            targetWord = filteredList[randomIndex];
         }
         else {
-            var targetIndex = Math.floor(Math.random() * nameList.length);
-            //console.log(nameList[targetIndex]);
+            var randomIndex = Math.floor(Math.random() * nameList.length);
+            targetWord = nameList[randomIndex];
         }
+
+        console.log(targetWord);
+        var targetIndex = nameList.indexOf(targetWord);
         window.targetAngle = calculateTargetAngle(targetIndex);
 
         $('#stop').css('display', 'inline-block');
@@ -188,6 +202,7 @@ function reset(){
     resultDisplayed = false;
     stop_flag = false;
     NGwordList = [];
+    targetWord = "";
 }
 
 function drawRoulette(){

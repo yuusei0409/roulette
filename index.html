@@ -9,9 +9,7 @@
         body {
             display: flex;
             flex-flow: column;
-            justify-content: center;
             align-items: center;
-            margin: 0;
         }
     </style>
 
@@ -46,8 +44,8 @@
     <div>
         <div>
             <table id="table">
-                <tr class="item"><td><button type="button" class="color-indicator" style="background-color:#000000;" onclick="ngItem(this)"></div></td><td><input type="text" class="name" value="1"></td><td><button type="button" onclick="rmItem(this)">削除</button></td></tr>
-                <tr class="item"><td><button type="button" class="color-indicator" style="background-color:#000000;" onclick="ngItem(this)"></div></td><td><input type="text" class="name" value="2"></td><td><button type="button" onclick="rmItem(this)">削除</button></td></tr>
+                <tr class="item"><td><button type="button" class="color-indicator" style="background-color:#000000;" onclick="ngItem(this)"></button></td><td><input type="text" class="name" value="1"></td><td><button type="button" class="color-indicator_" style="background-color:#000000;" onclick="tgItem(this)"></button></td><td><button type="button" onclick="rmItem(this)">削除</button></td></tr>
+                <tr class="item"><td><button type="button" class="color-indicator" style="background-color:#000000;" onclick="ngItem(this)"></button></td><td><input type="text" class="name" value="2"></td><td><button type="button" class="color-indicator_" style="background-color:#000000;" onclick="tgItem(this)"></button></td><td><button type="button" onclick="rmItem(this)">削除</button></td></tr>
             </table>
         </div>
     </div>
@@ -58,7 +56,13 @@
         width: 15px;
         height: 15px;
     }
+    .color-indicator_{
+        border: none;
+        width: 15px;
+        height: 15px;
+    }
     #result{
+        margin-top: -10px;
         font-size: 20px;
         font-weight: bold;
     }
@@ -67,7 +71,7 @@
 
     <script>
         $('.add').click(function(){
-            var add = '<tr class="item"><td><button type="button" class="color-indicator" style="background-color:#000000;" onclick="ngItem(this)"></div></td><td><input type="text" class="name" value="1"></td><td><button type="button" onclick="rmItem(this)">削除</button></td></tr>';
+            var add = '<tr class="item"><td><button type="button" class="color-indicator" style="background-color:#000000;" onclick="ngItem(this)"></button></td><td><input type="text" class="name" value=""></td><td><button type="button" class="color-indicator_" style="background-color:#000000;" onclick="tgItem(this)"></button></td><td><button type="button" onclick="rmItem(this)">削除</button></td></tr>';
             $('#table').append(add);
             if(mode==Mode.waiting){
                 dataFetch();
@@ -90,6 +94,10 @@
             if (!NGwordList.includes(itemName) && $('.name').length-1 > NGwordList.length) {
                 NGwordList.push(itemName);
             }
+        }
+        function tgItem(e){
+            var itemName = $(e).closest('.item').find('.name').val();
+            targetWord = itemName;
         }
     </script>
 </body>
