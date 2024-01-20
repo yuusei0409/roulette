@@ -169,7 +169,6 @@ function start(){
             targetWord = nameList[randomIndex];
         }
 
-        console.log(targetWord);
         var targetIndex = nameList.indexOf(targetWord);
         window.targetAngle = calculateTargetAngle(targetIndex);
 
