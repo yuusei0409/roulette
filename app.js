@@ -144,8 +144,12 @@ function validation(){
 
 function calculateTargetAngle(index) {
     // 各項目の角度範囲をラジアンで計算
-    var anglePerItem = 2 * PI / nameList.length; // 各項目の角度（ラジアン）
-    var targetAngle = index * anglePerItem + PI / 2 + anglePerItem/2;
+    var anglePerItem = 2 * PI / nameList.length; // 各項目の角度（ラジアン
+    var addangle = PI / 2;
+    if (index * anglePerItem > 3*PI/2) {
+        addangle = PI/2 - 2*PI;
+    }
+    var targetAngle = index * anglePerItem + addangle + anglePerItem/2;
 
     return targetAngle;
 }
@@ -168,7 +172,7 @@ function start(){
             var randomIndex = Math.floor(Math.random() * nameList.length);
             targetWord = nameList[randomIndex];
         }
-
+        
         var targetIndex = nameList.indexOf(targetWord);
         window.targetAngle = calculateTargetAngle(targetIndex);
 
@@ -243,7 +247,13 @@ function draw(){
         break;
     case Mode.constant:
         if (stop_flag) { //stopボタンが押された場合
-            if(theta > 0+2*PI-targetAngle && theta < 0.01+2*PI-targetAngle) {
+            if(2*PI < targetAngle) {
+                var angle = targetAngle-2*PI;
+            }
+            else {
+                var angle = 2*PI-targetAngle;
+            }
+            if(theta > 0+angle && theta < 0.01+angle) {
                 mode = Mode.deceleration;
             }
         }
